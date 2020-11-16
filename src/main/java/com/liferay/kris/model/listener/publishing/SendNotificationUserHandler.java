@@ -9,11 +9,7 @@ import com.liferay.portal.kernel.notifications.BaseUserNotificationHandler;
 import com.liferay.portal.kernel.notifications.UserNotificationHandler;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.StringUtil;
-/**
- * NOTIFICATION HANDLER : HTML MSG FORMAT 
- * @author thouroro
- *
- */
+
 @Component(service = UserNotificationHandler.class)
 public class SendNotificationUserHandler extends BaseUserNotificationHandler {
 	public static String PORTLET_ID = "com_liferay_kris_model_listener_publishing";
