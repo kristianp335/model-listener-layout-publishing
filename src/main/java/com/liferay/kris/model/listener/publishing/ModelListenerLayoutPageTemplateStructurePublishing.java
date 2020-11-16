@@ -23,10 +23,6 @@ import java.util.Date;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
-
-/**
- * @author Akos Thurzo
- */
 @Component(immediate = true, service = ModelListener.class)
 public class ModelListenerLayoutPageTemplateStructurePublishing extends BaseModelListener<LayoutPageTemplateStructureRel> {
 	
