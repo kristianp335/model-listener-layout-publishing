@@ -3,6 +3,7 @@ package com.liferay.kris.model.listener.publishing;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructureRel;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -19,11 +20,18 @@ import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
 
 import java.util.Date;
+import java.util.Map;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
-@Component(immediate = true, service = ModelListener.class)
+@Component(
+		immediate = true, 
+		configurationPid="com.liferay.kris.model.listener.publishing.ModelListenerConfiguration",
+		service = ModelListener.class
+	)
 public class ModelListenerLayoutPageTemplateStructurePublishing extends BaseModelListener<LayoutPageTemplateStructureRel> {
 	
 	
@@ -63,7 +71,9 @@ ServiceContext serviceContext = ServiceContextThreadLocal.getServiceContext();
 			//long userId = 35403;
 			
 			//Content Manager
-			long userId = 37627;
+			//long userId = 37627;
+
+			long userId = configuration.contentManager();
 			
 			String layoutName = "";
 			String layoutFriendlyUrl = "";
@@ -136,7 +146,9 @@ ServiceContext serviceContext = ServiceContextThreadLocal.getServiceContext();
 			//long userId = 35403;
 			
 			//Content Manager
-			long userId = 37627;
+			//long userId = 37627;
+			
+			long userId = configuration.contentManager();
 			
 			String layoutName = "";
 			String layoutFriendlyUrl = "";
@@ -194,4 +206,12 @@ ServiceContext serviceContext = ServiceContextThreadLocal.getServiceContext();
 			UserNotificationEventLocalService userNotificationEventLocalService) {
 		this.userNotificationEventLocalService = userNotificationEventLocalService;
 	}
+
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		configuration = ConfigurableUtil.createConfigurable(ModelListenerConfiguration.class, properties);
+	}
+
+	private ModelListenerConfiguration configuration;
 }
